@@ -12,6 +12,7 @@
       <set>
         <option value="$PROJECT_DIR$/Les15_First_program/ht/pom.xml" />
         <option value="$PROJECT_DIR$/Les17/pom.xml" />
+        <option value="$PROJECT_DIR$/Les18_Protocol_HTTP_Methods_GET_POST/pom.xml" />
       </set>
     </option>
     <option name="workspaceImportForciblyTurnedOn" value="true" />
