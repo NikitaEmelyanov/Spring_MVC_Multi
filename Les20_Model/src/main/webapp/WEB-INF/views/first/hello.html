@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<body>
+Hello!
+
+<a href="first/goodbye">Say goodbye </a> or <a href="/exit">Exit</a>
+or <a href ="/first/hello?name=Tom&surname=Jones">Request with parameters</a>
+<!-- Так же можно указывать параметры сразу в html файле --->
+
+<p th:text = "${message}"></p>
+<!-- th:text - Атрибут Thymeleaf, который позволяет вставлять текст в тег p (Paragraph)
+С помощью такого синтаксиса Thymeleaf увидит этот код и обратится к модели, получит значение по ключу
+ message и вставит текст в пространство тега p(Paragraph). Тег p - отображает текст--->
+</body>
+</html>
