@@ -1,8 +1,8 @@
-package Les23.controllers;
+package Les22.controllers;
 
 
-import Les23.dao.PersonDAO;
-import Les23.models.Person;
+import Les22.dao.PersonDAO;
+import Les22.models.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +21,8 @@ public class PeopleController {
     }
 
     @GetMapping()
-    public String index(@ModelAttribute("person") Person person) {
+    public String index(Model model) {
+        model.addAttribute("people", personDAO.index());
         return "people/index";
     }
 
@@ -41,4 +42,19 @@ public class PeopleController {
         personDAO.save(person);
         return "redirect:/people";
     }
+    @GetMapping("/{id}/edit")
+   public String edit(Model model, @PathVariable("id") int id){
+        model.addAttribute("person", personDAO.show(id));
+        return "people/edit";
+   }
+   @PatchMapping("/{id}")
+    public String update(@ModelAttribute("person") Person person, @PathVariable("id") int id){
+        personDAO.update(id,person);
+        return "redirect:/people";
+   }
+   @DeleteMapping("/{id}")
+    public String delete ( @PathVariable("id") int id){
+        personDAO.delete(id);
+        return "redirect:/people";
+   }
 }

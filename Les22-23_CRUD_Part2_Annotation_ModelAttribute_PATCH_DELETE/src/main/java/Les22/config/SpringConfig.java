@@ -1,4 +1,4 @@
-package Les23.config;
+package Les22.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -13,7 +13,7 @@ import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 
 @Configuration
-@ComponentScan("Les23")
+@ComponentScan("Les22")
 @EnableWebMvc // Замена тега <mvc:annotation-driven/> из файла applicationContextMVC.xml,
 // которая включает Spring MVC
     public class SpringConfig implements WebMvcConfigurer {

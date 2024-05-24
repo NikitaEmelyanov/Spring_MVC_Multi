@@ -1,6 +1,6 @@
-package Les23.dao;
+package Les22.dao;
 
-import Les23.models.Person;
+import Les22.models.Person;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -31,5 +31,17 @@ public class PersonDAO {
     public void save(Person person) {
         person.setId(++PEOPLE_COUNT);
         people.add(person);
+    }
+
+    public void update(int id, Person updatedPerson) {
+        Person personToBeUpdated = show(id);
+
+        personToBeUpdated.setName(updatedPerson.getName());
+    }
+
+    public void delete(int id) {
+        people.removeIf(p -> p.getId()==id);
+                //removeIf() - метод удаляющий объект по редикату, с помощью лямбды выражения
+        // нужно указать условие удаление
     }
 }

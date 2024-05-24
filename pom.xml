@@ -11,7 +11,9 @@
       <module>Les19_Options_GET_request_Annotation_RequestParam</module>
       <module>Les20_Model</module>
       <module>Les21_CRUD_REST_Pattern_DAO_Access_Object</module>
-      <module>Les22_CRUD_Part2_Annotation_ModelAttribute</module>
+      <module>Les22-23_CRUD_Part2_Annotation_ModelAttribute_PATCH_DELETE</module>
+
+
 
   </modules>
   <version>1.0-SNAPSHOT</version>

@@ -1,4 +1,4 @@
-package Les23.models;
+package Les22.models;
 
 public class Person {
     private int id;

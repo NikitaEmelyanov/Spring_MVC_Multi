@@ -6,7 +6,7 @@
         <artifactId>Spring_MVC_Multi</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>Les22_CRUD_Part2_Annotation_ModelAttribute</artifactId>
+    <artifactId>Les22-23_CRUD_Part2_Annotation_ModelAttribute_PATCH_DELETE</artifactId>
     <packaging>war</packaging>
     <name>Les22_CRUD_Part2_Annotation_ModelAttribute Maven Webapp</name>
     <url>http://maven.apache.org</url>
@@ -19,6 +19,6 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>Les22_CRUD_Part2_Annotation_ModelAttribute</finalName>
+        <finalName>Les22-23_CRUD_Part2_Annotation_ModelAttribute_PATCH_DELETE</finalName>
     </build>
 </project>
