@@ -12,7 +12,10 @@
       <module>Les20_Model</module>
       <module>Les21_CRUD_REST_Pattern_DAO_Access_Object</module>
       <module>Les22-23_CRUD_Part2_Annotation_ModelAttribute_PATCH_DELETE</module>
-
+      <module>Les24_Validation_form_Annotation_Valid</module>
+      <module>Les25_JDBC_API_Data_Base</module>
+      <module>Les26_SQL_injection_PreparedStatemen</module>
+      <module>Les27_JdbcTemplate</module>
 
 
   </modules>
@@ -72,6 +75,23 @@
         <artifactId>jakarta.servlet-api</artifactId>
         <version>1.2.2.1</version>
       </dependency>
+
+      <!-- Зависимость урока 24-->
+      <!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
+      <dependency>
+          <groupId>org.hibernate.validator</groupId>
+          <artifactId>hibernate-validator</artifactId>
+          <version>8.0.1.Final</version>
+      </dependency>
+
+      <!-- Зависимость урока 25-->
+      <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+      <dependency>
+          <groupId>org.postgresql</groupId>
+          <artifactId>postgresql</artifactId>
+          <version>42.7.3</version>
+      </dependency>
+
 
 
 

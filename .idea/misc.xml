@@ -15,6 +15,7 @@
         <option value="$PROJECT_DIR$/Les18_Protocol_HTTP_Methods_GET_POST/pom.xml" />
         <option value="$PROJECT_DIR$/Les22_CRUD_Part2_Annotation_ModelAttribute/Les10_CRUD_Part3_PATCH_DELETE/pom.xml" />
         <option value="$PROJECT_DIR$/Les23_CRUD_Part3_PATCH_DELETE/pom.xml" />
+        <option value="$PROJECT_DIR$/Les26_SQL_injection_PreparedStatemen/Les27_JdbcTemplate/pom.xml" />
         <option value="$PROJECT_DIR$/les22/pom.xml" />
       </set>
     </option>
