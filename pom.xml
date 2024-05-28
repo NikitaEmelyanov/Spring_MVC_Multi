@@ -17,6 +17,8 @@
       <module>Les26_SQL_injection_PreparedStatemen</module>
       <module>Les27_JdbcTemplate</module>
       <module>Les28_Configuration_file_for_DataBase</module>
+      <module>Les29_Batch_Update</module>
+      <module>Les30_Automatic_generation_of_meaning_ID</module>
 
 
   </modules>
