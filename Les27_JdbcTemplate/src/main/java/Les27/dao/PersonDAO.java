@@ -1,5 +1,8 @@
 package Les27.dao;
 import Les27.models.Person;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
@@ -9,122 +12,49 @@ import java.util.List;
 
 @Component
 public class PersonDAO {
-    private static int PEOPLE_COUNT;
-
-    private static final String URL = "jdbc:postgresql://localhost:5432/first_db";
-    private static final String USERNAME = "postgres";
-    private static final String PASSWORD = "1488";
-
-    private static Connection connection;
-
-    static {
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+    private final JdbcTemplate jdbcTemplate;
+@Autowired //Внедрение JdbcTemplate
+    public PersonDAO(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
+
+
     public List<Person> index() {
-        List<Person> people = new ArrayList<>();
-
-        try {
-            Statement statement = connection.createStatement();
-            String SQL = "SELECT * FROM Person";
-            ResultSet resultSet = statement.executeQuery(SQL);
-
-            while (resultSet.next()) {
-                Person person = new Person();
-
-                person.setId(resultSet.getInt("id"));
-                person.setName(resultSet.getString("name"));
-                person.setEmail(resultSet.getString("email"));
-                person.setAge(resultSet.getInt("age"));
-
-                people.add(person);
-            }
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        return people;
+       return jdbcTemplate.query("SELECT * FROM Person",new PersonMapper());
+               //метод query() из JdbcTemplate - в качестве первого аргумента указывается sql
+        // запрос, а в качестве второго указывается RowMapper (это такой объект, который
+        // отображает объекты талицы в виде сущности и его нужно реализовать самостоятельно,
+        // можно это сделать в отдельном классе). Поскольку в RowMapper  мы делаем ничего сложно,
+        // а только назначаем поля с помощью сеттеров, получив название, его реализация не
+        // обязательна, так как в Spring есть готовый RowMapper, который называется
+        // BeanPropertyRowMapper<>() и в качестве аргумента конструктора передаем нужный класс
+        // (Person.class). В дальнейших методах мы будем использовать его.
     }
 
     public Person show(int id) {
-        Person person = null;
-
-        try {
-            PreparedStatement preparedStatement =
-                    connection.prepareStatement("SELECT * FROM Person WHERE id=?");
-
-            preparedStatement.setInt(1, id);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            resultSet.next();
-
-            person = new Person();
-
-            person.setId(resultSet.getInt("id"));
-            person.setName(resultSet.getString("name"));
-            person.setEmail(resultSet.getString("email"));
-            person.setAge(resultSet.getInt("age"));
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        return person;
+return jdbcTemplate.query("SELECT * FROM Person WHERE Id=?",new Object[]{id},
+        new BeanPropertyRowMapper<>(Person.class)).stream().findAny().orElse(null);
+//Изначально выдается ошибка, так как при вызове метода query возвращается список , а нам необходимо
+// возвращать одного человека, это можно сделать с помощью лямбды выражения c помощью метода
+// findAny() если объект есть в списке вернуть его, если его нет - вернуть null с помощью  orElse.
     }
 
     public void save(Person person) {
-
-        try {
-            PreparedStatement preparedStatement=
-                    connection.prepareStatement("INSERT INTO Person VALUES (1, ?, ?, ?)");
-
-            preparedStatement.setString(1, person.getName());
-            preparedStatement.setInt(2,person.getAge());
-            preparedStatement.setString(3, person.getEmail());
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+    jdbcTemplate.update("INSERT INTO Person VALUES (1, ?, ?, ?)",
+            person.getName(),person.getAge(),person.getEmail());
     }
 
     public void update(int id, Person updatedPerson) {
-        try {
-            PreparedStatement preparedStatement =
-                    connection.prepareStatement("UPDATE Person SET name=?, age=?, email=? WHERE id=?");
+        jdbcTemplate.update("UPDATE Person SET name=?,age=?,email=? WHERE id=?",
+                updatedPerson.getName(),updatedPerson.getAge(),updatedPerson.getEmail(),id);
+        //В данном методе синтаксис передачи данных с помощью vararg'ов в отличии от метода show(),
+        // где использовался массив, причина реализации разных синтаксисов не ясна, возможно это
+        // из-за того, что в качестве последнего аргумента в методе show() передается
+        // BeanPropertyRowMapper<>()
 
-            preparedStatement.setString(1, updatedPerson.getName());
-            preparedStatement.setInt(2,updatedPerson.getAge());
-            preparedStatement.setString(3, updatedPerson.getEmail());
-            preparedStatement.setInt(4, id);
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     public void delete(int id) {
-        try {
-            PreparedStatement preparedStatement =
-                    connection.prepareStatement("DELETE FROM Person WHERE id=?");
-
-            preparedStatement.setInt(1,id);
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+    jdbcTemplate.update("DELETE FROM Person WHERE id=?",id);
     }
 }

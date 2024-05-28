@@ -1,47 +1,38 @@
-_________________________________Составление SQL запроса вручную_____________________________________
-1) Неудобно
-2) Легко допустить ошибку
-3) Угроза SQL инъекции
+__________________________________________Проблемы JDBC API___________________________________________
+1) Много лишнего кода (создание Connection, Statement, работа с ResultSet)
+2) Дублирование кода
+3) Неинформативный SQLException, который надо везде обрабатывать
 
-________________________________________SQL инъекция_________________________________________________
-Один из самых распространенных способов взлома сайтов и программ, работающих с базами данных
+___________________________________________Jdbc Template____________________________________________
+Jdbc Template - Обертка вокруг JDBC API, которая представляется Spring Framework
 
-String SQL = "INSERT INTO Person Values(" +1 + ",'" +person.getName() + "'," +
-                            person.getAge() + ",'" + person.getEmail() + "')";
+public List<Person> index() {
+        List<Person> people = new ArrayList<>();
 
-Так как строки из HTML формы напрямую конкатенируются в SQL запросе, злоумышленник может подобрать
-такую строку, которая нанесет вред
+        try {
+            Statement statement = connection.createStatement();
+            String SQL = "SELECT * FROM Person";
+            ResultSet resultSet = statement.executeQuery(SQL);
 
-Если в качестве email'а в форме мы введем строку: test@mail.ru'); DROP TABLE Person; --
+            while (resultSet.next()) {
+                Person person = new Person();
 
-INSERT INTO Person VALUES(1, 'test', 15, 'test@mail.ru'); DROP TABLE Person; --');
+                person.setId(resultSet.getInt("id"));
+                person.setName(resultSet.getString("name"));
+                person.setEmail(resultSet.getString("email"));           <---   JDBC API
+                person.setAge(resultSet.getInt("age"));                        ~ 20 строк
 
-SQL инъекции бывают разные, в основном их принцип, что передается несколько команд вместо или под
- видом одной команды, таким образом можно вытащить всех пользователей их базы данных и прочее
+                people.add(person);
+            }
 
- ______________________________________PreparedStatement_____________________________________________
- То, что должно использоваться в JDBC API для всех запросов, где содержаться данные, полученные от
- пользователя
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
- PreparedStatement preparedStatement =
-         connection.prepareStatement(sql: "INSERT INTO Person VALUES(1, ?, ?, ?)");
- preparedStatement.setString(parametrindex: 1, person.getName());
- preparedStatement.setInt(parametrindex: 2, person.getAge());
- preparedStatement.setString(parametrindex: 3, person.getEmail());
-
- preparedStatement.executeUpdate();
-
- SQL запрос компилируется один раз и не может быть изменен. Данные от пользователя могут вставлены
- лишь в указанные места запроса и не могут изменить сам SQL запрос. При использовании
- PreparedStatement не получится выйти за пределы строки (как в примере и email) перечисление
- SQL команд воспримется как целая строка
-
- _____________________________PreparedStatement преимущества_________________________________________
- 1) Удобнее использовать, чем Statement (не надо вручную заниматься конкатенацией)
- 2) Предотвращает SQL инъекции
- 3) Быстрее, чем Statement. Особенно если запросов много.
-
- ___________________PreparedStatement Скорость в сравнении со Statement______________________________
- 1) PreparedStatement - SQL запрос компилируется только 1 раз
- 2) Statement - SQL запрос компилируется каждый раз
- 3) PreparedStatement - может еще кэшироваться на самой БД
+        return people;
+    }
+                                            |                  Jdbc Template  1 строка
+                                            |                        /
+    public List<Person> index(){
+    return jdbcTemplate.query(sql: "SELECT * FROM Person", new BeanPropertyRowMapper<>(Person.class));
+    }

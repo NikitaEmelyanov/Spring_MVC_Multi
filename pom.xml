@@ -92,7 +92,13 @@
           <version>42.7.3</version>
       </dependency>
 
-
+      <!-- Зависимость урока 27-->
+      <!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-jdbc</artifactId>
+          <version>6.1.8</version>
+      </dependency>
 
 
   </dependencies>
