@@ -16,6 +16,7 @@
       <module>Les25_JDBC_API_Data_Base</module>
       <module>Les26_SQL_injection_PreparedStatemen</module>
       <module>Les27_JdbcTemplate</module>
+      <module>Les28_Configuration_file_for_DataBase</module>
 
 
   </modules>

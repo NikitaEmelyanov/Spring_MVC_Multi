@@ -1,0 +1,38 @@
+__________________________________________Проблемы JDBC API___________________________________________
+1) Много лишнего кода (создание Connection, Statement, работа с ResultSet)
+2) Дублирование кода
+3) Неинформативный SQLException, который надо везде обрабатывать
+
+___________________________________________Jdbc Template____________________________________________
+Jdbc Template - Обертка вокруг JDBC API, которая представляется Spring Framework
+
+public List<Person> index() {
+        List<Person> people = new ArrayList<>();
+
+        try {
+            Statement statement = connection.createStatement();
+            String SQL = "SELECT * FROM Person";
+            ResultSet resultSet = statement.executeQuery(SQL);
+
+            while (resultSet.next()) {
+                Person person = new Person();
+
+                person.setId(resultSet.getInt("id"));
+                person.setName(resultSet.getString("name"));
+                person.setEmail(resultSet.getString("email"));           <---   JDBC API
+                person.setAge(resultSet.getInt("age"));                        ~ 20 строк
+
+                people.add(person);
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return people;
+    }
+                                            |                  Jdbc Template  1 строка
+                                            |                        /
+    public List<Person> index(){
+    return jdbcTemplate.query(sql: "SELECT * FROM Person", new BeanPropertyRowMapper<>(Person.class));
+    }
