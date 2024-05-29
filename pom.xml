@@ -5,7 +5,7 @@
   <artifactId>Spring_MVC_Multi</artifactId>
   <packaging>pom</packaging>
   <modules>
-    <module>Les15_First_program</module>
+      <module>Les15_First_program</module>
       <module>Les16_Configuration_for_Java</module>
       <module>Les17_Annotation_Controller</module>
       <module>Les19_Options_GET_request_Annotation_RequestParam</module>
@@ -19,6 +19,8 @@
       <module>Les28_Configuration_file_for_DataBase</module>
       <module>Les29_Batch_Update</module>
       <module>Les30_Automatic_generation_of_meaning_ID</module>
+      <module>Les31_SQL_restrictions</module>
+
 
 
   </modules>
@@ -34,6 +36,8 @@
         <version>3.8.1</version>
         <scope>test</scope>
       </dependency>
+
+
 
       <!-- Зависимости урока 15
       <!- https://mvnrepository.com/artifact/org.springframework/spring-core -->

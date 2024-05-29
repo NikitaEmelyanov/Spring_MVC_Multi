@@ -1,5 +1,5 @@
-package Les30.dao;
-import Les30.models.Person;
+package Les31.dao;
+import Les31.models.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
